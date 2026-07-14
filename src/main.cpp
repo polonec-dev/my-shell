@@ -1,16 +1,19 @@
-#include "interface.hpp"
 #include <iostream>
+#include <sstream>
 #include <string>
+#include <vector>
+
+#include "interface.hpp"
+#include "command.hpp"
 
 // TODO
 // - command parsing
 
-
 int main()
 {
-	CShell * sh = new CShell("shell> ");
+	CShell sh("shell> ");
 	while (true) {
-		sh->prompt();
+		sh.prompt();
 		std::string input;
 
 		if (!std::getline(std::cin, input))
@@ -28,12 +31,12 @@ int main()
 			break;
 		}
 		else if (input == "cd") {
-			// cd
+			CCommand c(input);
 			break;
 		}
 		else {
 			// fork + command
-			break;
+			CCommand c(input);
 		}
 	}
 	return 0;
