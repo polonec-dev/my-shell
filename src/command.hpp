@@ -8,5 +8,5 @@ private:
     int argc_;
     std::vector<std::string> argv_;
 public:
-    CCommand(int argc, std::string argv);
+    CCommand(std::string argv);
 };

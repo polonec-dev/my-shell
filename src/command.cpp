@@ -6,14 +6,15 @@
 
 #include "command.hpp"
 
-CCommand::CCommand(int argc, std::string argv)
-: argc_(argc - 1)
+CCommand::CCommand(std::string argv)
 {
     std::istringstream is(argv);
     is >> name_;
 
+    argc_ = 0;
 	std::string tmp;
 	while (is >> tmp) {
+        argc_++;
 		argv_.push_back(tmp);
 	}
 }
