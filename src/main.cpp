@@ -1,18 +1,21 @@
 #include <iostream>
+#include <sched.h>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unistd.h>
+
 
 #include "shell.hpp"
-#include "command.hpp"
 
 // TODO
 // - command parsing
 
 int main()
 {
-	CShell sh("shell> ");
+	CShell sh("root");
 	while (true) {
+		pid_t pid = 0;
 		sh.prompt();
 		std::string input;
 
@@ -26,17 +29,25 @@ int main()
 			continue;
 		}
 
-		if(input == "exit")
+		CCommand c(input);
+
+		if(c.name() == "exit")
 		{
 			break;
 		}
-		else if (input == "cd") {
-			CCommand c(input);
-			break;
+		else if (c.name() == "cd") {
+			
+			if (c.argc() < 2) {
+				sh.cd("~");
+			}
+			else {
+				sh.cd(c.argv(1));
+			}
 		}
 		else {
 			// fork + command
-			CCommand c(input);
+			pid = fork();
+			sh.run(c);
 		}
 	}
 	return 0;
