@@ -1,16 +1,40 @@
 #include "interface.hpp"
 #include <iostream>
+#include <string>
 
 // TODO
-// - reprint prompt when input is only whitespace chars
+// - command parsing
 
 
 int main()
 {
 	CShell * sh = new CShell("shell> ");
-	std::string input;
 	while (true) {
 		sh->prompt();
-		std::cin >> input;
+		std::string input;
+
+		if (!std::getline(std::cin, input))
+		{
+			break;
+		}
+
+		if (input.empty()) 
+		{
+			continue;
+		}
+
+		if(input == "exit")
+		{
+			break;
+		}
+		else if (input == "cd") {
+			// cd
+			break;
+		}
+		else {
+			// fork + command
+			break;
+		}
 	}
+	return 0;
 }
