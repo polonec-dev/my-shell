@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -8,4 +9,7 @@ private:
     std::vector<std::string> argv_;
 public:
     CCommand(std::string argv);
+    std::string name();
+    std::string argv(size_t id);
+    int argc();
 };

@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -14,4 +15,19 @@ CCommand::CCommand(std::string argv)
         argc_++;
 		argv_.push_back(tmp);
 	}
+}
+
+std::string CCommand::name()
+{
+	return argv(0);
+}
+
+std::string CCommand::argv(size_t id)
+{
+	return argv_.at(id);
+}
+
+int CCommand::argc()
+{
+	return argv_.size();
 }
