@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "interface.hpp"
+#include "shell.hpp"
 
 CShell::CShell(std::string pr)
 : prompt_(pr) {}
