@@ -9,9 +9,6 @@
 CCommand::CCommand(std::string argv)
 {
     std::istringstream is(argv);
-    is >> name_;
-
-    argc_ = 0;
 	std::string tmp;
 	while (is >> tmp) {
         argc_++;

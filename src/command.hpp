@@ -4,8 +4,7 @@
 class CCommand
 {
 private:
-    std::string name_;
-    int argc_;
+    int argc_ = 0;
     std::vector<std::string> argv_;
 public:
     CCommand(std::string argv);
