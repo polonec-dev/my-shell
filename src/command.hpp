@@ -10,6 +10,7 @@ private:
 public:
     CCommand(std::string argv);
     std::string name();
+    std::vector<std::string> argv();
     std::string argv(size_t id);
     int argc();
 };
