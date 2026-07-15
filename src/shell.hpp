@@ -13,5 +13,5 @@ public:
 	CShell(std::string user, std::string dir);
 	void prompt();
 	void cd(std::string path);
-	int run(CCommand & command);
+	int run(CCommand command);
 };
