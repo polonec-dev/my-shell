@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdio>
+#include <cstdlib>
 #include <iostream>
 #include <numeric>
 #include <sched.h>
@@ -16,17 +17,17 @@
 
 CShell::CShell()
 {
-	user_ = getpwuid(geteuid())->pw_name;
+	user_ = std::getenv("USER");
 }
 CShell::CShell(std::string dir)
 {
-	user_ = getpwuid(geteuid())->pw_name;
+	user_ = std::getenv("USER");
 	cd(dir);
 }
 std::string CShell::prompt()
 {
 	std::string path = std::filesystem::current_path().string();
-	if (path == "/home/" + user_) 
+	if (path == std::getenv("HOME")) 
 	{
 		path = "~";	
 	}
@@ -36,7 +37,7 @@ std::string CShell::prompt()
 void CShell::cd(std::string path)
 {
 	if (path == ("~")) {
-		path = "/home/" + user_;
+		path = std::getenv("HOME");
 	}
 	if (chdir(path.c_str()) == -1) {
 		perror("chdir");

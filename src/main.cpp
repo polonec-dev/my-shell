@@ -32,6 +32,10 @@ int main()
 		{
 			add_history(line);	
 		}
+		else 
+		{
+			continue;
+		}
 		std::free(line);
 
 		CCommand c(input);
@@ -43,7 +47,7 @@ int main()
 		else if (c.name() == "cd") {
 			
 			if (c.argc() < 2) {
-				sh.cd("~");
+				sh.cd(std::getenv("HOME"));
 			}
 			else {
 				sh.cd(c.argv(1));
