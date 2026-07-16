@@ -13,3 +13,5 @@ add_executable(shell
 	src/shell.cpp
 	src/command.cpp
 )
+
+target_link_libraries(shell PRIVATE readline)
