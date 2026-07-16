@@ -46,7 +46,6 @@ int main()
 		}
 		else {
 			// fork + command
-			pid = fork();
 			sh.run(c);
 		}
 	}
