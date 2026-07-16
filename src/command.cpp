@@ -27,7 +27,7 @@ std::vector<std::string> CCommand::argv()
 	return argv_;
 }
 
-std::string CCommand::argv(size_t id)
+std::string & CCommand::argv(size_t id)
 {
 	return argv_.at(id);
 }
