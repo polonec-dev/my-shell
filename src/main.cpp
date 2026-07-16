@@ -12,6 +12,7 @@
 #include "shell.hpp"
 
 // TODO
+// - redirection
 // - pipes
 
 int main()
