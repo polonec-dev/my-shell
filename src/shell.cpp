@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstddef>
 #include <cstdio>
 #include <iostream>
@@ -7,30 +8,39 @@
 #include <filesystem>
 #include <unistd.h>
 #include <vector>
+#include <sys/wait.h>
+#include <filesystem>
+#include <pwd.h>
 
 #include "shell.hpp"
 
-CShell::CShell(std::string user)
-: user_(user)
+CShell::CShell()
 {
-	cd("~");
+	cd(std::filesystem::current_path().string());
 }
-CShell::CShell(std::string user, std::string dir)
-: user_(user)
+CShell::CShell(std::string dir)
 {
+	user_ = getpwuid(getuid())->pw_name;
 	cd(dir);
 }
 void CShell::prompt()
 {
-	std::cout << user_ + " " + dir_ + "> " << std::flush;
+	std::string path = std::filesystem::current_path().string();
+	if (path == "/home/" + user_) 
+	{
+		path = "~";	
+	}
+	std::cout << user_ + " " + path + "> " << std::flush;
 }
 
 void CShell::cd(std::string path)
 {
-	if (path == ("/home/" + user_ )) {
-		path = "~";
+	if (path == ("~")) {
+		path = "/home/" + user_;
 	}
-	dir_ = path;
+	if (chdir(path.c_str()) == -1) {
+		perror("chdir");
+	};
 }
 
 int CShell::run(CCommand command)
@@ -40,6 +50,7 @@ int CShell::run(CCommand command)
 	if (pid == -1) 
 	{
 		perror("fork");
+		return -1;
 	}
 	else if (pid == 0)
 	{
@@ -55,7 +66,11 @@ int CShell::run(CCommand command)
 	}
 	else
 	{
-		prompt();
+		int status;
+		if (waitpid(pid, &status, 0) == -1) 
+		{
+			perror("waitpid");
+		}
 		return 0;
 	}
 }
