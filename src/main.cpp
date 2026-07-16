@@ -1,33 +1,38 @@
+#include <cstdlib>
 #include <iostream>
 #include <sched.h>
 #include <sstream>
 #include <string>
 #include <vector>
 #include <unistd.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 
 
 #include "shell.hpp"
 
 // TODO
-// - command parsing
+// - pipes
 
 int main()
 {
-	CShell sh("root");
+	CShell sh;
 	while (true) {
 		pid_t pid = 0;
-		sh.prompt();
-		std::string input;
+		char * line = readline(sh.prompt().c_str());
 
-		if (!std::getline(std::cin, input))
+		if (line == nullptr) 
 		{
 			break;
 		}
 
-		if (input.empty()) 
+		std::string input(line);
+
+		if (!input.empty()) 
 		{
-			continue;
+			add_history(line);	
 		}
+		std::free(line);
 
 		CCommand c(input);
 
@@ -45,7 +50,6 @@ int main()
 			}
 		}
 		else {
-			// fork + command
 			sh.run(c);
 		}
 	}

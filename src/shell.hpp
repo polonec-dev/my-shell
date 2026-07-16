@@ -20,7 +20,7 @@ private:
 public:
 	CShell();
 	CShell(std::string dir);
-	void prompt();
+	std::string prompt();
 	void cd(std::string path);
 	int run(CCommand command);
 };

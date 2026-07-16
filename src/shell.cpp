@@ -16,21 +16,21 @@
 
 CShell::CShell()
 {
-	cd(std::filesystem::current_path().string());
+	user_ = getpwuid(geteuid())->pw_name;
 }
 CShell::CShell(std::string dir)
 {
-	user_ = getpwuid(getuid())->pw_name;
+	user_ = getpwuid(geteuid())->pw_name;
 	cd(dir);
 }
-void CShell::prompt()
+std::string CShell::prompt()
 {
 	std::string path = std::filesystem::current_path().string();
 	if (path == "/home/" + user_) 
 	{
 		path = "~";	
 	}
-	std::cout << user_ + " " + path + "> " << std::flush;
+	return user_ + " " + path + "> ";
 }
 
 void CShell::cd(std::string path)
